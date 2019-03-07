@@ -1,7 +1,9 @@
-var mongoose = require('mongoose');
-var Schema = mongoose.Schema;
+import mangoose from 'mongoose';
 
-var ProductSchema = new Schema({
+const mongoose = mangoose;
+const Schema = mongoose.Schema;
+
+const ProductSchema = new Schema({
     name: {type: String, required: true},
     description: {type: String, required: false},
     price: {type: Number, required: true}
@@ -9,4 +11,4 @@ var ProductSchema = new Schema({
     versionKey: false
 });
 
-module.exports = mongoose.model('Product', ProductSchema);
+export const Product = mongoose.model('Product', ProductSchema);
