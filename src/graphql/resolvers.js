@@ -1,11 +1,15 @@
-import { Product } from "../models/Product.model";
+import * as productController from "../controllers/Product.controller";
+import * as categoryController from "../controllers/Category.controller";
 
 export default {
     Query: {
-        products: async () => await Product.find({}).exec(),
-        product: async (parent, args) => await Product.find({_id: args.id}).exec()
+        products: productController.ProductsQuery,
+        product: productController.ProductQuery,
+        categories: categoryController.CategoryQuery
     },
     Mutation: {
-        createProduct: async (parent, args) => await new Product(args).save()
+        createProduct: productController.createProductMutation,
+        clearAll: productController.clearAllProductsMutation,
+        createCategory: categoryController.createCategoryMutation
     }
 };

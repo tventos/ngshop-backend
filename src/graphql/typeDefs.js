@@ -8,12 +8,21 @@ type Product {
     price: Int!
 }
 
+type Category {
+    _id: String!
+    name: String!
+    uri: String!
+}
+
 type Query {
     products: [Product!]!
     product(id: ID): [Product!]!
+    categories: [Category!]!
 }
 
 type Mutation {
     createProduct(name: String! description: String price: Int!): Product!
+    clearAll: Product!
+    createCategory(name: String! uri: String!): Category!
 }
 `;
