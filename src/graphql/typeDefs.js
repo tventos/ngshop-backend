@@ -10,7 +10,7 @@ type Product {
 
 type Query {
     products: [Product!]!
-    oneProduct(id: ID): [Product!]!
+    product(id: ID): [Product!]!
 }
 
 type Mutation {
