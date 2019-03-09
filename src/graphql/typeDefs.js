@@ -10,39 +10,30 @@ type Product {
     uri: String!
 }
 
-input ProductInput {
-    _id: String
-    name: String!
-    description: String
-    price: Int!
-    uri: String!
-    category_id: String!
-}
-
 input FilterInput {
-    _id: String
     name: String
     price_min: Int
     price_max: Int
     uri: String
-    category_id: String!
 }
 
 type Category {
-    scalar: Category
     _id: String!
     name: String!
     uri: String!
+    products(limit: Int offset: Int input: FilterInput): [Product]
+    count: Int
 }
 
 type Query {
     products(input: FilterInput): [Product!]!
-    product(id: ID): [Product!]!
+    product(uri: String): [Product!]!
+    category(uri: String!): [Category!]!
     categories: [Category!]!
 }
 
 type Mutation {
-    createProduct(input: ProductInput): Product!
+    createProduct(name: String! description: String price: Int! uri: String! category_id: String!): Product!
     clearAll: Product!
     createCategory(name: String! uri: String!): Category!
 }

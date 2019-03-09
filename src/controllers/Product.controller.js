@@ -1,26 +1,43 @@
 import { Product } from "../models/Product.model";
 
-export const ProductsQuery = async (parent, args) => {
+export const ProductsQuery = async (parent, args, ctx, info) => {
     let filter = {
-        category_id: args.input.category_id
+        category_id: parent._id
     };
 
-    if (args.input.name) {
-        filter['name'] = { $regex: '.*' + args.input.name + '.*' };
+    let offset = 0;
+    let limit = 12;
+
+    if (typeof args.input !== "undefined") {
+        if (args.input.name) {
+            filter['name'] = {$regex: '.*' + args.input.name + '.*'};
+        }
+
+        if (args.input.price_min || args.input.price_max) {
+            filter['price'] = {
+                "$gt": parseInt(args.input.price_min),
+                "$lt": parseInt(args.input.price_max)
+            };
+        }
     }
 
-    if (args.input.price_min || args.input.price_max) {
-        filter['price'] = {
-            "$gt": parseInt(args.input.price_min),
-            "$lt": parseInt(args.input.price_max)
-        };
+    if (args.offset) {
+        offset = args.offset;
     }
 
-    return await Product.find(filter).exec();
+    if (args.limit) {
+        limit = args.limit;
+    }
+
+    if (info.fieldName === 'products') {
+        return Product.find(filter).skip(offset).limit(limit).exec()
+    } else {
+        return Product.find(filter).countDocuments()
+    }
 };
 
 export const ProductQuery = async (parent, args) => {
-    return await Product.find({_id: args.id}).exec();
+    return await Product.find({uri: args.uri}).exec();
 };
 
 export const createProductMutation = async (parent, args) => {
