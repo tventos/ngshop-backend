@@ -8,6 +8,7 @@ type Product {
     description: String
     price: Int!
     uri: String!
+    category: [Category]
 }
 
 input FilterInput {

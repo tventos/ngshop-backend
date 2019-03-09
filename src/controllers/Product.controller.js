@@ -2,15 +2,14 @@ import { Product } from "../models/Product.model";
 
 export const ProductsQuery = async (parent, args, ctx, info) => {
     let filter = {};
+    let offset = 0;
+    let limit = 12;
 
     if (typeof parent !== "undefined") {
         if (parent._id) {
             filter['category_id'] = parent._id;
         }
     }
-
-    let offset = 0;
-    let limit = 12;
 
     if (typeof args.input !== "undefined") {
         if (args.input.name) {
