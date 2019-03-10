@@ -5,12 +5,6 @@ export const ProductsQuery = async (parent, args, ctx, info) => {
     let offset = 0;
     let limit = 12;
 
-    if (typeof parent !== "undefined") {
-        if (parent._id) {
-            filter['category_id'] = parent._id;
-        }
-    }
-
     if (typeof args.input !== "undefined") {
         if (args.input.name) {
             filter['name'] = {$regex: '.*' + args.input.name + '.*'};
@@ -32,11 +26,15 @@ export const ProductsQuery = async (parent, args, ctx, info) => {
         limit = args.limit;
     }
 
-    if (info.fieldName === 'products') {
-        return Product.find(filter).skip(offset).limit(limit).exec()
-    } else {
-        return Product.find(filter).countDocuments()
-    }
+    const countTotal = Product.find(filter).countDocuments();
+
+    return await Product.find(filter).skip(offset).limit(limit).then(result => {
+        return {
+            list: result,
+            count: result.length,
+            countTotal: countTotal
+        }
+    })
 };
 
 export const ProductQuery = async (parent, args) => {

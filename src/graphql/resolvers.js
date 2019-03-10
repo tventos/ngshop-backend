@@ -14,11 +14,7 @@ export default {
         createCategory: categoryController.createCategoryMutation
     },
 
-    Category: {
-        products: async (root, args, ctx, info) => productController.ProductsQuery(root, args, ctx, info),
-        count: async (root, args, ctx, info) => productController.ProductsQuery(root, args, ctx, info)
-    },
     Product: {
-        category: async (root, args) => categoryController.CategoryQuery(root, args)
-    }
+        category: async (root, args) => categoryController.CategoryQuery(root, args),
+    },
 };

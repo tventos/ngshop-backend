@@ -8,7 +8,14 @@ type Product {
     description: String
     price: Int!
     uri: String!
-    category: [Category]
+    category: Category
+}
+
+type ProductList {
+    scalar: ProductList
+    list: [Product]
+    count: Int
+    countTotal: Int
 }
 
 input FilterInput {
@@ -22,14 +29,12 @@ type Category {
     _id: String!
     name: String!
     uri: String!
-    products(limit: Int offset: Int input: FilterInput): [Product]
-    count: Int
 }
 
 type Query {
-    products(limit: Int offset: Int input: FilterInput): [Product!]!
+    products(limit: Int offset: Int input: FilterInput): ProductList
     product(uri: String): [Product!]!
-    category(uri: String!): [Category!]!
+    category(uri: String!): Category
     categories: [Category!]!
 }
 
