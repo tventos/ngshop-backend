@@ -1,6 +1,10 @@
-# REST API for Ngshop
+# GraphQL API for Ngshop
 
-Writed on ExpressJS
+Developed on ExpressJS
+
+## Frontend
+
+Here: https://github.com/tventos/ngshop-frontend
 
 ## Development server
 

@@ -32,7 +32,7 @@ type Category {
 }
 
 type Query {
-    products(limit: Int offset: Int input: FilterInput): ProductList
+    products(category_id: String limit: Int offset: Int input: FilterInput): ProductList
     product(uri: String): [Product!]!
     category(uri: String!): Category
     categories: [Category!]!

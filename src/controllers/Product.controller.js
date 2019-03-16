@@ -18,6 +18,11 @@ export const ProductsQuery = async (parent, args, ctx, info) => {
         }
     }
 
+
+    if (args.category_id) {
+        filter['category_id'] = args.category_id;
+    }
+
     if (args.offset) {
         offset = args.offset;
     }
@@ -42,7 +47,7 @@ export const ProductQuery = async (parent, args) => {
 };
 
 export const createProductMutation = async (parent, args) => {
-    return await new Product(args.input).save();
+    return await new Product(args).save();
 };
 
 export const clearAllProductsMutation = async () => {
